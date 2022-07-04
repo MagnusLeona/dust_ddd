@@ -1,0 +1,30 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="magnus.dust.user.repository.mapper.UserMapper">
+    <select id="selectUserById" parameterType="long" resultMap="userMap">
+        select * from dust_user where id=#{id}
+    </select>
+
+    <insert id="insertUser" parameterType="magnus.dust.user.core.User" useGeneratedKeys="true"
+            keyProperty="id" keyColumn="id">
+        insert into dust_user(name, password, email, description) value(#{name}, #{password}, #{email}, #{description})
+    </insert>
+
+    <select id="selectUserByNameAndPassword" resultMap="userMap">
+        select id, name, email, description from dust_user where name=#{name} and password=#{password}
+    </select>
+
+    <select id="selectUserByName" resultMap="userMap">
+        select id from dust_user where name=#{name};
+    </select>
+
+    <resultMap id="userMap" type="magnus.dust.user.core.User">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="description" column="description"/>
+        <result property="email" column="email"/>
+        <result property="password" column="password"/>
+    </resultMap>
+</mapper>
